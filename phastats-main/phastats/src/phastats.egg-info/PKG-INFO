@@ -1,0 +1,316 @@
+Metadata-Version: 2.4
+Name: phastats
+Version: 2.1.0
+Summary: Advanced FASTQ Quality Control Analysis Tool
+Home-page: https://github.com/username/phastats
+Author: Phastats Development Team
+Author-email: Phastats Development Team <phastats@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/username/phastats
+Project-URL: Documentation, https://github.com/username/phastats/wiki
+Project-URL: Repository, https://github.com/username/phastats
+Project-URL: Bug Reports, https://github.com/username/phastats/issues
+Keywords: bioinformatics,fastq,quality-control,genomics,sequencing
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Scientific/Engineering :: Bio-Informatics
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.7
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: matplotlib>=3.3.0
+Requires-Dist: numpy>=1.19.0
+Requires-Dist: pandas>=1.1.0
+Requires-Dist: scipy>=1.5.0
+Provides-Extra: dev
+Requires-Dist: pytest>=6.0; extra == "dev"
+Requires-Dist: pytest-cov>=2.10; extra == "dev"
+Requires-Dist: black>=21.0; extra == "dev"
+Requires-Dist: flake8>=3.8; extra == "dev"
+Requires-Dist: mypy>=0.800; extra == "dev"
+Provides-Extra: docs
+Requires-Dist: sphinx>=3.0; extra == "docs"
+Requires-Dist: sphinx-rtd-theme>=0.5; extra == "docs"
+Requires-Dist: myst-parser>=0.15; extra == "docs"
+Dynamic: author
+Dynamic: home-page
+Dynamic: license-file
+Dynamic: requires-python
+
+# Phastats: Advanced FASTQ Quality Control Analysis Tool
+
+[![PyPI version](https://badge.fury.io/py/phastats.svg)](https://badge.fury.io/py/phastats)
+[![Python 3.7+](https://img.shields.io/badge/python-3.7+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+Phastats is a comprehensive, high-performance tool for analyzing FASTQ files with detailed quality control metrics, professional visualizations, and multiple output formats. Designed for genomics researchers and bioinformatics pipelines.
+
+## Features
+
+- **Memory-efficient chunked processing** for large FASTQ files
+- **Multiple output formats**: HTML reports, CSV, JSON, TSV
+- **Professional visualizations**: GC content, quality scores, length distributions
+- **Per-base sequence content analysis** with nucleotide composition plots
+- **Comprehensive quality metrics** including N50, average quality, low-quality percentages
+- **Flexible filtering options** by length and quality thresholds
+- **Cross-platform compatibility** (Windows, macOS, Linux)
+- **Easy installation** via pip or from source
+- **Web interface** for browser-based analysis
+- **Command-line interface** with extensive options
+- **Batch processing** capabilities for multiple files
+- **Subsample analysis** for quick preliminary assessment
+
+## 🚀 Features
+
+### Core Analysis
+- **Memory-efficient processing** with chunked streaming for large files
+- **Comprehensive quality metrics** including per-base and per-read statistics
+- **GC content analysis** with statistical distributions
+- **Sequence length statistics** with N50 calculations
+- **Per-base nucleotide composition** analysis
+
+### Visualization
+- **Professional plots** with publication-ready quality
+- **Multiple plot formats** (PNG, PDF, SVG)
+- **Customizable plot parameters** (size, DPI, colors)
+- **Interactive HTML reports** with embedded visualizations
+
+### Output Formats
+- **HTML reports** with responsive design and embedded plots
+- **CSV data exports** for spreadsheet analysis
+- **JSON structured data** for programmatic access
+- **TSV files** for bioinformatics pipelines
+
+### Performance & Flexibility
+- **Compressed file support** (.fastq.gz, .fq.gz)
+- **Configurable quality thresholds** and filtering
+- **Subsampling** for very large datasets
+- **Command-line customization** with 25+ options
+- **Production-ready** for automated pipelines
+
+## 📦 Installation
+
+### From PyPI (Recommended)
+```bash
+pip install phastats
+```
+
+### From Source
+```bash
+git clone https://github.com/username/phastats.git
+cd phastats
+pip install -e .
+```
+
+### Development Installation
+```bash
+git clone https://github.com/username/phastats.git
+cd phastats
+pip install -e ".[dev]"
+```
+
+## Quick Start
+
+### Installation
+```bash
+# Analyze a FASTQ file with default settings
+phastats input.fastq
+
+# Analyze compressed file with custom output directory
+phastats input.fastq.gz --output-dir my_analysis
+
+# Generate only specific plots
+phastats input.fq --plots gc,quality --csv
+```
+
+### Advanced Usage
+```bash
+# Custom quality thresholds and filtering
+phastats input.fastq --quality-threshold 25 --min-length 50 --max-length 500
+
+# Large file processing with subsampling
+phastats large_file.fastq.gz --subsample 100000 --chunk-size 5000
+
+# Pipeline-friendly output
+phastats input.fq --no-html --json --tsv --quiet
+```
+
+## Output Examples
+
+The tool generates comprehensive outputs in multiple formats:
+
+### HTML Report
+```html
+phastats_output_sample_20231215_143022/
+├── phastats_report.html      # Interactive HTML report
+├── phastats_statistics.json  # JSON data
+└── plots/
+    ├── gc-distribution.png
+    ├── length_distribution.png
+    ├── quality-distribution.png
+    └── Per-base_sequence_content.png
+```
+
+### Features
+- **Professional styling** with gradient backgrounds
+- **Embedded plots** (no external dependencies)
+- **Responsive design** for mobile and desktop
+- **Interactive statistics** with detailed metrics
+- **Export options** for sharing and archiving
+
+## 🎛️ Command-Line Options
+
+### Output Options
+- `--output-dir DIR`: Custom output directory
+- `--output-prefix PREFIX`: Custom file prefix
+- `--no-html`: Skip HTML report generation
+- `--csv`: Generate CSV output
+- `--json`: Generate JSON output
+- `--tsv`: Generate TSV output
+
+### Plot Options
+- `--plots LIST`: Comma-separated plots (gc,length,quality,perbase,all)
+- `--no-plots`: Skip all plot generation
+- `--plot-format FORMAT`: Plot format (png,pdf,svg)
+- `--plot-dpi DPI`: Plot resolution (default: 300)
+- `--plot-size WxH`: Plot dimensions (default: 10x6)
+
+### Quality Analysis
+- `--quality-threshold N`: Low quality threshold (default: 20)
+- `--high-quality-threshold N`: High quality threshold (default: 30)
+- `--min-length N`: Minimum sequence length filter
+- `--max-length N`: Maximum sequence length filter
+
+### Performance Options
+- `--chunk-size N`: Processing chunk size (default: 10000)
+- `--subsample N`: Subsample N sequences
+- `--skip-n50`: Skip N50 calculation
+- `--skip-perbase`: Skip per-base analysis
+
+### Verbosity
+- `--quiet`: Suppress progress messages
+- `--verbose`: Enable verbose output
+- `--debug`: Enable debug output
+
+## 🐍 Python API
+
+### Basic Usage
+```python
+from phastats import analyze_fastq
+
+# Analyze FASTQ file
+results = analyze_fastq('input.fastq', output_dir='results')
+
+# Access statistics
+print(f"Total sequences: {results['total_sequences']}")
+print(f"Average quality: {results['quality_stats']['overall_avg_quality']:.1f}")
+print(f"GC content: {results['gc_content']:.1f}%")
+```
+
+### Advanced Usage
+```python
+from phastats.core import analyze_fastq
+from phastats.reports import generate_report
+
+# Custom analysis
+stats = analyze_fastq(
+    input_file='input.fastq.gz',
+    output_dir='custom_analysis',
+    enabled_plots={'gc', 'quality'},
+    quality_threshold=25,
+    chunk_size=5000,
+    verbosity=2
+)
+
+# Generate custom reports
+output_formats = {'html': True, 'json': True, 'csv': False}
+generate_report(stats, output_formats, 'output_dir')
+```
+
+## 🧪 Testing
+
+Run the test suite:
+```bash
+pytest tests/
+```
+
+Run with coverage:
+```bash
+pytest --cov=phastats tests/
+```
+
+## 📈 Performance Benchmarks
+
+Performance tested on a variety of FASTQ files:
+- Small files (1K sequences): < 1 second
+- Medium files (100K sequences): 5-10 seconds  
+- Large files (1M+ sequences): 30-60 seconds
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+### Development Setup
+```bash
+git clone https://github.com/username/phastats.git
+cd phastats
+pip install -e ".[dev]"
+```
+
+### Running Tests
+```bash
+pytest tests/
+black src/ tests/
+flake8 src/ tests/
+mypy src/
+```
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- Inspired by FastQC and other quality control tools
+- Built with matplotlib, pandas, numpy, and scipy
+- Thanks to the bioinformatics community for feedback and testing
+
+## 📞 Support
+
+- **Bug Reports**: [GitHub Issues](https://github.com/username/phastats/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/username/phastats/discussions)
+- **Email**: phastats@example.com
+
+## 🔄 Changelog
+
+### v2.1.0 (Latest)
+- Professional HTML reports with embedded plots
+- Memory-efficient processing for large files
+- Comprehensive Python API
+- Web interface for browser-based analysis
+
+### v2.0.0  
+- Enhanced quality analysis processing all reads
+- Per-base sequence content analysis
+- Safe output handling with unique directories
+- Improved plotting and HTML output
+- Performance optimizations and memory efficiency
+
+### v1.0.0
+- Initial release
+- Basic FASTQ quality control analysis
+- Four core visualization plots
+- HTML report generation
+
+## License
+
+MIT License - see LICENSE file for details.
+
+**Made with care for the genomics community** 

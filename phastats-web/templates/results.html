@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block title %}Analysis Results - Phastats{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <h2>
+        <div class="icon">
+            <i class="bi bi-check-circle"></i>
+        </div>
+        Analysis Complete
+    </h2>
+    <p>
+        Your FASTQ file has been successfully analyzed. Download your results below or view 
+        individual plots and statistics. All files will be automatically cleaned up after 2 hours.
+    </p>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- Download Options -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-download me-2"></i>Download Results
+                </h5>
+                <div class="row">
+                    {% if has_html_report %}
+                    <div class="col-md-6 mb-3">
+                        <a href="{{ url_for('download_file', analysis_id=analysis_id, file_type='html') }}" 
+                           class="btn btn-primary w-100">
+                            <i class="bi bi-file-earmark-text me-2"></i>HTML Report
+                        </a>
+                    </div>
+                    {% endif %}
+                    {% if has_stats %}
+                    <div class="col-md-6 mb-3">
+                        <a href="{{ url_for('download_file', analysis_id=analysis_id, file_type='json') }}" 
+                           class="btn btn-outline-primary w-100">
+                            <i class="bi bi-file-earmark-code me-2"></i>JSON Statistics
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <a href="{{ url_for('download_file', analysis_id=analysis_id, file_type='all') }}" 
+                           class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-file-earmark-zip me-2"></i>Complete Package (ZIP)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plot Gallery -->
+        {% if plot_files %}
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-graph-up me-2"></i>Generated Plots
+                </h5>
+                <div class="row">
+                    {% for plot_file in plot_files %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="{{ url_for('view_plot', analysis_id=analysis_id, plot_name=plot_file) }}" 
+                                     alt="{{ plot_file }}" 
+                                     class="img-fluid plot-thumbnail mb-3"
+                                     style="max-height: 200px; cursor: pointer;"
+                                     data-plot-name="{{ plot_file }}"
+                                     data-plot-url="{{ url_for('view_plot', analysis_id=analysis_id, plot_name=plot_file) }}">
+                                <h6>{{ plot_file.replace('_', ' ').replace('.png', '').title() }}</h6>
+                                <a href="{{ url_for('download_plot', analysis_id=analysis_id, plot_name=plot_file) }}" 
+                                   class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-download me-1"></i>Download
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="col-md-4">
+        <!-- Quick Actions -->
+        <div class="card mb-4">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-lightning me-2"></i>Quick Actions
+                </h5>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('index') }}" class="btn btn-primary">
+                        <i class="bi bi-plus-circle me-2"></i>Analyze Another File
+                    </a>
+                    {% if has_html_report %}
+                    <a href="{{ url_for('download_file', analysis_id=analysis_id, file_type='html') }}" 
+                       class="btn btn-outline-primary">
+                        <i class="bi bi-eye me-2"></i>View Full Report
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Info -->
+        <div class="info-section">
+            <h5>
+                <i class="bi bi-info-circle icon"></i>
+                Analysis Information
+            </h5>
+            <ul>
+                <li><i class="bi bi-check-circle"></i>Analysis ID: {{ analysis_id[:8] }}...</li>
+                <li><i class="bi bi-check-circle"></i>Files generated: {{ plot_files|length + (1 if has_html_report else 0) + (1 if has_stats else 0) }}</li>
+                <li><i class="bi bi-check-circle"></i>All results include quality metrics</li>
+                <li><i class="bi bi-check-circle"></i>Plots are high-resolution PNG format</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Plot Modal -->
+<div class="modal fade" id="plotModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="plotModalTitle">Plot View</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img id="plotModalImage" src="" alt="Plot" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle plot thumbnail clicks
+    document.querySelectorAll('.plot-thumbnail').forEach(function(img) {
+        img.addEventListener('click', function() {
+            const plotName = this.getAttribute('data-plot-name');
+            const plotUrl = this.getAttribute('data-plot-url');
+            showPlotModal(plotName, plotUrl);
+        });
+    });
+});
+
+function showPlotModal(plotName, plotUrl) {
+    document.getElementById('plotModalTitle').textContent = plotName.replace('_', ' ').replace('.png', '').replace(/\b\w/g, l => l.toUpperCase());
+    document.getElementById('plotModalImage').src = plotUrl;
+    new bootstrap.Modal(document.getElementById('plotModal')).show();
+}
+</script>
+{% endblock %} 
