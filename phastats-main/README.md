@@ -2,33 +2,87 @@
 
 # Phastats
 
-A gene sequence statistics tool
+[![PyPI version](https://badge.fury.io/py/phastats.svg)](https://badge.fury.io/py/phastats)
+[![Python versions](https://img.shields.io/pypi/pyversions/phastats.svg)](https://pypi.org/project/phastats/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://your-username.github.io/phastats/)
 
-In comparison to Fastqc, our goal is to make a tool that takes in an argument fastq file and outputs a html file containing similar information. In running our Sequence Statistics tool, the metrics of the resulting html file would include N50 score, quality distribution, length distribution, and general, useful counts including mean read length and mean quantity of the reads.
+**Professional FASTQ Quality Analysis Tool**
 
-## Prerequisites
+Phastats is a comprehensive bioinformatics tool for analyzing FASTQ sequencing data quality. It provides detailed statistics, interactive visualizations, and professional reports to help researchers assess the quality of their sequencing data.
 
-`phastats` requires:
+## Features
 
-- Python 3.xx
-- Python packages:
-  - pandas
-  - numpy
-  - scipy
-  - matplotlib
-  - argparse
+- **Comprehensive Analysis**: Quality scores, sequence lengths, GC content, and per-base content analysis
+- **N50 Calculation**: Genome assembly quality metric not available in FastQC
+- **Modern Interface**: Both command-line and web-based interfaces
+- **Multiple Output Formats**: HTML, JSON, CSV, and TSV reports
+- **High Performance**: Optimized for large file processing with memory-efficient algorithms
+- **Professional Reports**: Modern, responsive HTML reports with interactive visualizations
 
-If you do not have these packages, you can intall them by running this command:
+## Quick Start
 
+### Installation
+
+```bash
+# Install from PyPI (recommended)
+pip install phastats
+
+# Or install from source
+git clone https://github.com/your-username/phastats.git
+cd phastats
+pip install -e .
 ```
-pip install pandas numpy scipy matplotlib
+
+### Basic Usage
+
+```bash
+# Analyze a FASTQ file
+phastats input.fastq
+
+# Specify output directory
+phastats input.fastq -o output_directory
+
+# Generate specific plots only
+phastats input.fastq --plots gc length quality
 ```
 
-If you do not have root access, you can run the command above with the additional `--user` option to install locally:
+### Python API
 
+```python
+from phastats.core import analyze_fastq
+
+# Basic analysis
+results = analyze_fastq("input.fastq")
+
+# Advanced analysis with custom parameters
+results = analyze_fastq(
+    "input.fastq",
+    output_dir="my_analysis",
+    quality_threshold=25,
+    enabled_plots={'gc', 'length', 'quality'}
+)
 ```
-pip install --user pandas numpy scipy matplotlib
+
+## Web Interface
+
+Launch the web interface for easy file upload and analysis:
+
+```bash
+cd phastats-web
+pip install -r requirements.txt
+python app.py
 ```
+
+Visit `http://localhost:5000` in your browser.
+
+## Requirements
+
+- Python 3.7+
+- matplotlib >= 3.3.0
+- numpy >= 1.19.0
+- pandas >= 1.1.0
+- scipy >= 1.5.0
 
 ## Running phastats
 
