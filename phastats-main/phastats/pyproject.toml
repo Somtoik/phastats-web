@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "phastats"
 dynamic = ["version"]
 authors = [
-    {name = "Your Name", email = "your.email@example.com"},
+    {name = "somtochukwu Ikeanyi", email = "somtoikeanyi1@gmail.com"},
 ]
 description = "Advanced FASTQ Quality Analysis Tool"
 readme = "README.md"
@@ -49,11 +49,11 @@ web = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/your-username/phastats"
-Documentation = "https://your-username.github.io/phastats/"
-Repository = "https://github.com/your-username/phastats.git"
-"Bug Reports" = "https://github.com/your-username/phastats/issues"
-Changelog = "https://github.com/your-username/phastats/blob/main/CHANGELOG.md"
+Homepage = "https://github.com/somtoik/phastats"
+Documentation = "https://somtoik.github.io/phastats/"
+Repository = "https://github.com/somtoik/phastats.git"
+"Bug Reports" = "https://github.com/somtoik/phastats/issues"
+Changelog = "https://github.com/somtoik/phastats/blob/main/CHANGELOG.md"
 
 [project.scripts]
 phastats = "phastats.cli:main"

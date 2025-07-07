@@ -14,7 +14,7 @@ We're excited that you're interested in contributing to Phastats! This document 
 
 1. **Fork and Clone the Repository**
    ```bash
-   git clone https://github.com/your-username/phastats.git
+   git clone https://github.com/somtoik/phastats.git
    cd phastats
    ```
 

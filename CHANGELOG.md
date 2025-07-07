@@ -70,7 +70,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sequence length analysis
 - GC content analysis
 
-[Unreleased]: https://github.com/your-username/phastats/compare/v2.1.0...HEAD
-[2.1.0]: https://github.com/your-username/phastats/compare/v2.0.0...v2.1.0
-[2.0.0]: https://github.com/your-username/phastats/compare/v1.0.0...v2.0.0
-[1.0.0]: https://github.com/your-username/phastats/releases/tag/v1.0.0 
+[Unreleased]: https://github.com/somtoik/phastats/compare/v2.1.0...HEAD
+[2.1.0]: https://github.com/somtoik/phastats/compare/v2.0.0...v2.1.0
+[2.0.0]: https://github.com/somtoik/phastats/compare/v1.0.0...v2.0.0
+[1.0.0]: https://github.com/somtoik/phastats/releases/tag/v1.0.0 

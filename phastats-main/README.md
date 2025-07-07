@@ -1,11 +1,9 @@
-
-
 # Phastats
 
 [![PyPI version](https://badge.fury.io/py/phastats.svg)](https://badge.fury.io/py/phastats)
 [![Python versions](https://img.shields.io/pypi/pyversions/phastats.svg)](https://pypi.org/project/phastats/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://your-username.github.io/phastats/)
+[![Documentation](https://img.shields.io/badge/docs-latest-brightgreen.svg)](https://somtoik.github.io/phastats/)
 
 **Professional FASTQ Quality Analysis Tool**
 
@@ -29,7 +27,7 @@ Phastats is a comprehensive bioinformatics tool for analyzing FASTQ sequencing d
 pip install phastats
 
 # Or install from source
-git clone https://github.com/your-username/phastats.git
+git clone https://github.com/somtoik/phastats.git
 cd phastats
 pip install -e .
 ```
@@ -154,7 +152,7 @@ Using a .fq dataset as an argument, Phastats parses command-line arguments to ge
 
 ## Benchmarking
 
-The tool’s correctness and performance are tested by comparing its output with FastQC(version 0.11.9), a widely-used tool for quality control checks on raw sequence data. 
+The tool's correctness and performance are tested by comparing its output with FastQC(version 0.11.9), a widely-used tool for quality control checks on raw sequence data. 
 
 The datasets for benchmarking include:
 - Sequencing data from the Human Genome Structural Variation Consortium, particularly focusing on the Puerto Rican population dataset.
