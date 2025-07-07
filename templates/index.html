@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}Upload FASTQ File - Phastats{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <h2>
+        <div class="icon">
+            <i class="bi bi-graph-up-arrow"></i>
+        </div>
+        Professional FASTQ Quality Analysis
+    </h2>
+    <p>
+        Phastats provides comprehensive quality control analysis for FASTQ sequencing data. 
+        Upload your files to get detailed insights into sequence quality, GC content distribution, 
+        per-base content analysis, and length statistics with interactive visualizations and reports.
+    </p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <!-- Upload Form -->
+        <div class="card">
+            <div class="card-body">
+                <form id="uploadForm" enctype="multipart/form-data">
+                    <!-- File Upload Area -->
+                    <div class="mb-4">
+                        <label for="fileInput" class="form-label fw-semibold">
+                            <i class="bi bi-file-earmark-arrow-up me-2"></i>Select FASTQ File
+                        </label>
+                        <div class="drop-zone" id="dropZone">
+                            <div class="drop-zone-content">
+                                <div id="fileDropDisplay">
+                                    <i class="bi bi-cloud-upload display-4 text-muted mb-3"></i>
+                                    <p class="mb-2">Drag and drop your FASTQ file here, or</p>
+                                    <button type="button" class="btn btn-outline-primary mt-2" onclick="document.getElementById('fileInput').click()">
+                                        <i class="bi bi-folder2-open me-2"></i>Browse Files
+                                    </button>
+                                </div>
+                                <div id="fileSelectedDisplay" class="d-none">
+                                    <i class="bi bi-file-earmark-check display-4 text-success mb-3"></i>
+                                    <p class="mb-2"><strong id="fileName"></strong></p>
+                                    <p class="text-muted small mb-2">Size: <span id="fileSize"></span> MB</p>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm mt-2" onclick="document.getElementById('fileInput').click()">
+                                        <i class="bi bi-arrow-repeat me-1"></i>Change File
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" class="form-control d-none" id="fileInput" name="file" 
+                               accept=".fastq,.fq,.fastq.gz,.fq.gz" required>
+                        <div class="form-text">
+                            Supported formats: .fastq, .fq, .fastq.gz, .fq.gz (max 100MB)
+                        </div>
+                    </div>
+
+                    <!-- Analysis Parameters -->
+                    <div class="accordion mb-4" id="parametersAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" 
+                                        data-bs-toggle="collapse" data-bs-target="#parametersCollapse">
+                                    <i class="bi bi-gear me-2"></i>Analysis Parameters (Optional)
+                                </button>
+                            </h2>
+                            <div id="parametersCollapse" class="accordion-collapse collapse" 
+                                 data-bs-parent="#parametersAccordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="qualityThreshold" class="form-label">Quality Threshold</label>
+                                            <input type="number" class="form-control" id="qualityThreshold" 
+                                                   name="quality_threshold" value="20" min="0" max="40">
+                                            <div class="form-text">Minimum quality score for analysis</div>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="highQualityThreshold" class="form-label">High Quality Threshold</label>
+                                            <input type="number" class="form-control" id="highQualityThreshold" 
+                                                   name="high_quality_threshold" value="30" min="0" max="40">
+                                            <div class="form-text">Threshold for high-quality bases</div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="encoding" class="form-label">Quality Encoding</label>
+                                            <select class="form-select" id="encoding" name="encoding">
+                                                <option value="phred33" selected>Phred+33 (Illumina 1.8+)</option>
+                                                <option value="phred64">Phred+64 (Illumina 1.3-1.7)</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-check mt-4">
+                                                <input class="form-check-input" type="checkbox" id="skipPerbase" name="skip_perbase">
+                                                <label class="form-check-label" for="skipPerbase">
+                                                    Skip per-base analysis (faster)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg" id="submitBtn">
+                            <i class="bi bi-play-circle me-2"></i>Start Analysis
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Progress Area (Hidden initially) -->
+        <div class="card mt-4 d-none" id="progressCard">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <i class="bi bi-hourglass-split me-2"></i>Processing Your File...
+                </h5>
+                <div class="progress mb-3">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                         role="progressbar" style="width: 100%"></div>
+                </div>
+                <p class="text-muted mb-0">
+                    <i class="bi bi-info-circle me-2"></i>
+                    This may take a few moments depending on file size. Please don't close this page.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Analysis Features Info -->
+<div class="info-section">
+    <div class="row">
+        <div class="col-md-6">
+            <h5>
+                <i class="bi bi-check-circle icon"></i>
+                What we analyze:
+            </h5>
+            <ul>
+                <li><i class="bi bi-check-circle"></i>Sequence length distribution</li>
+                <li><i class="bi bi-check-circle"></i>Quality score distribution</li>
+                <li><i class="bi bi-check-circle"></i>GC content analysis</li>
+                <li><i class="bi bi-check-circle"></i>Per-base sequence content</li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <h5>
+                <i class="bi bi-file-earmark-text icon"></i>
+                Output formats:
+            </h5>
+            <ul>
+                <li><i class="bi bi-file-earmark-text"></i>Interactive HTML report</li>
+                <li><i class="bi bi-file-earmark-code"></i>JSON statistics file</li>
+                <li><i class="bi bi-file-earmark-image"></i>High-quality plot images</li>
+                <li><i class="bi bi-file-earmark-zip"></i>Complete results package</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const uploadForm = document.getElementById('uploadForm');
+    const fileInput = document.getElementById('fileInput');
+    const dropZone = document.getElementById('dropZone');
+    const submitBtn = document.getElementById('submitBtn');
+    const progressCard = document.getElementById('progressCard');
+
+    // File drag and drop functionality
+    dropZone.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        dropZone.classList.add('drag-over');
+    });
+
+    dropZone.addEventListener('dragleave', function(e) {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+    });
+
+    dropZone.addEventListener('drop', function(e) {
+        e.preventDefault();
+        dropZone.classList.remove('drag-over');
+        
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            updateFileInfo();
+        }
+    });
+
+    fileInput.addEventListener('change', updateFileInfo);
+
+    function updateFileInfo() {
+        const file = fileInput.files[0];
+        if (file) {
+            const fileName = file.name;
+            const fileSize = (file.size / (1024 * 1024)).toFixed(2);
+            
+            // Update the display elements
+            document.getElementById('fileName').textContent = fileName;
+            document.getElementById('fileSize').textContent = fileSize;
+            
+            // Show selected file display, hide drop display
+            document.getElementById('fileDropDisplay').classList.add('d-none');
+            document.getElementById('fileSelectedDisplay').classList.remove('d-none');
+        } else {
+            // Show drop display, hide selected file display
+            document.getElementById('fileDropDisplay').classList.remove('d-none');
+            document.getElementById('fileSelectedDisplay').classList.add('d-none');
+        }
+    }
+
+    // Form submission
+    uploadForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Debug: Check if file is selected
+        const file = fileInput.files[0];
+        if (!file) {
+            alert('Please select a file first!');
+            return;
+        }
+        
+        console.log('File selected:', file.name, file.size);
+        
+        const formData = new FormData(uploadForm);
+        
+        // Debug: Check FormData contents
+        console.log('FormData contents:');
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+        
+        // Show progress
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Processing...';
+        progressCard.classList.remove('d-none');
+        
+        fetch('/upload', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirect_url;
+            } else {
+                throw new Error(data.error || 'Upload failed');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error: ' + error.message);
+            
+            // Reset form
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="bi bi-play-circle me-2"></i>Start Analysis';
+            progressCard.classList.add('d-none');
+        });
+    });
+});
+</script>
+{% endblock %} 

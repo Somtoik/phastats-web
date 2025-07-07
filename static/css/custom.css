@@ -1,0 +1,599 @@
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+/* Custom styles for Phastats web application */
+
+/* Modern Red and Grey Color Palette */
+:root {
+    --primary-red: #DC2626;
+    --primary-red-hover: #B91C1C;
+    --primary-red-light: #FEE2E2;
+    --accent-red: #EF4444;
+    --dark-grey: #1F2937;
+    --medium-grey: #6B7280;
+    --light-grey: #F3F4F6;
+    --border-grey: #E5E7EB;
+    --text-dark: #111827;
+    --text-medium: #4B5563;
+    --success-green: #10B981;
+    --success-light: #D1FAE5;
+    --error-red: #DC2626;
+    --error-light: #FEE2E2;
+    --white: #FFFFFF;
+}
+
+/* Base Typography */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--light-grey);
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+.header-bar {
+    background: linear-gradient(135deg, var(--dark-grey) 0%, var(--medium-grey) 100%);
+    color: var(--white);
+    padding: 1.5rem 0;
+    margin-bottom: 3rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-bar h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin: 0;
+    text-align: center;
+    letter-spacing: -0.5px;
+}
+
+.header-bar .subtitle {
+    text-align: center;
+    font-weight: 300;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+    opacity: 0.9;
+}
+
+/* Container and Layout */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* Hero Section */
+.hero-section {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 3rem;
+    margin-bottom: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--primary-red);
+}
+
+.hero-section h2 {
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.hero-section .icon {
+    width: 2rem;
+    height: 2rem;
+    background: var(--primary-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    font-size: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.1rem;
+    color: var(--text-medium);
+    line-height: 1.8;
+    margin: 0;
+}
+
+/* Card Styling */
+.card {
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-grey);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.card-body {
+    padding: 2.5rem;
+}
+
+/* Drop Zone Styling */
+.drop-zone {
+    border: 3px dashed var(--border-grey);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: var(--white);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.drop-zone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent, var(--primary-red-light), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.drop-zone:hover {
+    border-color: var(--primary-red);
+    background: var(--primary-red-light);
+}
+
+.drop-zone:hover::before {
+    opacity: 0.3;
+}
+
+.drop-zone.drag-over {
+    border-color: var(--primary-red);
+    background: var(--primary-red-light);
+    transform: scale(1.02);
+}
+
+.drop-zone.drag-over::before {
+    opacity: 0.5;
+}
+
+.drop-zone-content {
+    position: relative;
+    z-index: 1;
+}
+
+.drop-zone i {
+    color: var(--medium-grey);
+    transition: color 0.3s ease;
+}
+
+.drop-zone:hover i {
+    color: var(--primary-red);
+}
+
+/* Button Styling */
+.btn {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    font-size: 1rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+    left: 100%;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary-red) 0%, var(--accent-red) 100%);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-red-hover) 0%, var(--primary-red) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+}
+
+.btn-outline-primary {
+    border: 2px solid var(--primary-red);
+    color: var(--primary-red);
+    background: transparent;
+}
+
+.btn-outline-primary:hover {
+    background: var(--primary-red);
+    color: var(--white);
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary {
+    border: 2px solid var(--medium-grey);
+    color: var(--medium-grey);
+    background: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background: var(--medium-grey);
+    color: var(--white);
+}
+
+.btn-lg {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Form Styling */
+.form-label {
+    font-weight: 500;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.form-control, .form-select {
+    font-family: 'Montserrat', sans-serif;
+    border: 2px solid var(--border-grey);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: var(--white);
+    color: var(--text-dark);
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-red);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    outline: none;
+}
+
+.form-text {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+    margin-top: 0.5rem;
+}
+
+/* Accordion Styling */
+.accordion-button {
+    background: var(--light-grey);
+    border: 1px solid var(--border-grey);
+    color: var(--text-dark);
+    font-weight: 500;
+    padding: 1rem 1.5rem;
+    border-radius: 12px !important;
+}
+
+.accordion-button:not(.collapsed) {
+    background: var(--primary-red-light);
+    color: var(--primary-red);
+    border-color: var(--primary-red);
+}
+
+.accordion-button:focus {
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+}
+
+/* Progress Styling */
+.progress {
+    height: 8px;
+    border-radius: 10px;
+    background: var(--light-grey);
+    overflow: hidden;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, var(--primary-red) 0%, var(--accent-red) 100%);
+    border-radius: 10px;
+}
+
+/* Alert Styling */
+.alert {
+    border-radius: 12px;
+    border: none;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.alert-success {
+    background: var(--success-light);
+    color: var(--success-green);
+    border-left: 4px solid var(--success-green);
+}
+
+.alert-danger {
+    background: var(--error-light);
+    color: var(--error-red);
+    border-left: 4px solid var(--error-red);
+}
+
+/* Info Section */
+.info-section {
+    background: var(--white);
+    border-radius: 16px;
+    padding: 2.5rem;
+    margin-top: 3rem;
+    border: 1px solid var(--border-grey);
+}
+
+.info-section h5 {
+    color: var(--text-dark);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.info-section .icon {
+    color: var(--primary-red);
+}
+
+.info-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.info-section li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: var(--text-medium);
+}
+
+.info-section li i {
+    color: var(--success-green);
+    width: 1.25rem;
+}
+
+/* Loading Animation */
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0 1rem;
+    }
+    
+    .header-bar h1 {
+        font-size: 2rem;
+    }
+    
+    .hero-section, .card-body {
+        padding: 2rem;
+    }
+    
+    .drop-zone {
+        padding: 3rem 1rem;
+    }
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+.d-none { display: none !important; }
+.d-block { display: block !important; }
+.d-flex { display: flex !important; }
+.align-items-center { align-items: center; }
+.justify-content-center { justify-content: center; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+/* Navigation styling */
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Card improvements */
+.card-header {
+    border-radius: 10px 10px 0 0 !important;
+    font-weight: 600;
+}
+
+/* Drop zone styling */
+.drop-zone input[type="file"] {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Button improvements */
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Progress styling */
+.progress-bar {
+    border-radius: 10px;
+}
+
+/* Alert improvements */
+.alert {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Form improvements */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 2px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* Accordion improvements */
+.accordion-button {
+    border-radius: 8px !important;
+    font-weight: 500;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: rgba(0, 123, 255, 0.1);
+    color: var(--primary-color);
+}
+
+/* Footer styling */
+footer {
+    margin-top: auto;
+    border-top: 1px solid #dee2e6;
+}
+
+/* Utility classes */
+.shadow-sm {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1) !important;
+}
+
+.rounded-lg {
+    border-radius: 10px !important;
+}
+
+/* Animation classes */
+.fade-in {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Loading spinner */
+.spinner-grow-sm {
+    width: 1rem;
+    height: 1rem;
+}
+
+/* Results page specific styles */
+.plot-thumbnail {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
+    max-height: 200px;
+    width: 100%;
+    object-fit: contain;
+}
+
+.plot-thumbnail:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Modal improvements */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.modal-header {
+    border-bottom: 1px solid #dee2e6;
+    background-color: var(--light-color);
+    border-radius: 10px 10px 0 0;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+    background-color: var(--light-color);
+    border-radius: 0 0 10px 10px;
+}
+
+/* Code styling */
+code {
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: #e83e8c;
+}
+
+/* List improvements */
+.list-unstyled li {
+    padding: 0.25rem 0;
+}
+
+/* Icon improvements */
+.bi {
+    vertical-align: -0.125em;
+}
+
+/* Custom loading animation */
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% { content: ''; }
+    40% { content: '.'; }
+    60% { content: '..'; }
+    80%, 100% { content: '...'; }
+} 
